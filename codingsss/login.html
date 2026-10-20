@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="center-container">
+
+    <div id="loadingOverlay" class="loader-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loaderMsg">Verifying credentials...</p>
+    </div>
+
+    <div class="form-container">
+
+        <h2 id="loginTitle">LOGIN</h2>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <input type="text" id="loginUsername" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="loginPassword" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="main-btn" id="loginBtn">
+                Login
+            </button>
+
+        </form>
+
+        <div class="form-footer">
+
+            <a href="reset.html" id="forgotPassLink">
+                Forgot Password?
+            </a>
+
+            <a href="signup.html" class="signup-link" id="signUpLink">
+                Sign up
+            </a>
+
+        </div>
+
+    </div>
+    <script src="login.js"></script>
+
+</body>
+
+</html>

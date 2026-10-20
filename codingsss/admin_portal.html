@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="loadingOverlay" class="loader-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loaderMsg">Loading Admin Panel...</p>
+    </div>
+
+    <aside class="user-panel" id="userPanel">
+        <div class="panel-header">
+            <h3 data-key="adminPanel">Admin Panel</h3>
+            <i class="fas fa-times toggle-btn" onclick="toggleSidebar()"></i>
+        </div>
+
+        <ul class="menu-items">
+            <li>
+                <a href="#" class="active" id="aNavUsers"
+                    onclick="switchSection('usersSection', 'aNavUsers'); return false;">
+                    <i class="fas fa-users"></i>
+                    <span class="hide-on-collapse" data-key="studentsNav">Students</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="aNavAnnounce" onclick="switchSection('announceSection', 'aNavAnnounce'); return false;">
+                    <i class="fas fa-bullhorn"></i>
+                    <span class="hide-on-collapse" data-key="announcementsNav">Announcements</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="aNavActivities"
+                    onclick="switchSection('adminActivitiesSection', 'aNavActivities'); return false;">
+                    <i class="fas fa-tasks"></i>
+                    <span class="hide-on-collapse" data-key="activities">Activities</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="navSubjects" onclick="switchSection('subjectsSection', 'navSubjects'); return false;">
+                    <i class="fas fa-book"></i>
+                    <span class="hide-on-collapse" data-key="subjects">Subjects</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="aNavSched" onclick="switchSection('adminSchedSection', 'aNavSched'); return false;">
+                    <i class="fas fa-calendar"></i>
+                    <span class="hide-on-collapse" data-key="schedule">Schedules</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="aNavGrades" onclick="switchSection('adminGradesSection', 'aNavGrades'); return false;">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span class="hide-on-collapse" data-key="grades">Grades</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" id="aNavSettings"
+                    onclick="switchSection('adminSettingsSection', 'aNavSettings'); return false;">
+                    <i class="fas fa-cog"></i>
+                    <span class="hide-on-collapse" data-key="settings">Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="panel-footer">
+            <div class="theme-toggle-row" onclick="toggleTheme()">
+                <i class="fas fa-adjust"></i>
+                <span class="hide-on-collapse" id="themeText">Dark Mode</span>
+            </div>
+            <a href="#" class="menu-items" style="color: var(--error-red);" onclick="logout(); return false;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="hide-on-collapse" data-key="logout">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-bar">
+            <h2 class="portal-title" data-key="adminPortalTitle">Admin Management Portal</h2>
+        </header>
+
+        <section id="usersSection">
+            <div class="card">
+                <h3 data-key="registeredStudentsTitle">Registered Student Accounts</h3>
+                <div id="studentsTableContainer" style="margin-top: 15px;"></div>
+            </div>
+
+            <div id="adminEditStudentCard" class="card hidden">
+                <h3 data-key="editStudentTitle">Edit Student Account &amp; Credentials</h3>
+                <form id="adminEditStudentForm" onsubmit="saveStudentEditsByAdmin(event)">
+                    <input type="hidden" id="aStudentOriginalUsername">
+
+                    <div class="input-group">
+                        <label for="aStudentUsername" data-key="usernameLabel">Username</label>
+                        <input type="text" id="aStudentUsername" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentPassword" data-key="passwordLabel">Password</label>
+                        <input type="password" id="aStudentPassword" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentFullName" data-key="fullNameLabel">Full Name</label>
+                        <input type="text" id="aStudentFullName" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentEmail" data-key="emailLabel">Email</label>
+                        <input type="email" id="aStudentEmail" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentAge" data-key="ageLabel">Age</label>
+                        <input type="number" id="aStudentAge" min="1" max="120" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentDob" data-key="dobLabel">Date of Birth</label>
+                        <input type="date" id="aStudentDob" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentPob" data-key="pobLabel">Place of Birth</label>
+                        <input type="text" id="aStudentPob" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentFather" data-key="fatherLabel">Father's Name</label>
+                        <input type="text" id="aStudentFather" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentMother" data-key="motherLabel">Mother's Name</label>
+                        <input type="text" id="aStudentMother" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentAddress" data-key="addressLabel">Address</label>
+                        <input type="text" id="aStudentAddress" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentCourse" data-key="courseLabel">Course</label>
+                        <select id="aStudentCourse"
+                            onchange="handleCourseSelectChange(this.value, 'aStudentMajorGroup', 'aStudentMajor')"
+                            required>
+                            <option value="BS Computer Science">BS Computer Science</option>
+                            <option value="BS Criminology">BS Criminology</option>
+                            <option value="BS Accountancy">BS Accountancy</option>
+                            <option value="BS Education">BS Education</option>
+                            <option value="BS Business Administration">BS Business Administration</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group hidden" id="aStudentMajorGroup">
+                        <label for="aStudentMajor" data-key="majorLabel">Major</label>
+                        <select id="aStudentMajor"></select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="aStudentPhone" data-key="phoneLabel">Phone</label>
+                        <input type="tel" id="aStudentPhone" required>
+                    </div>
+
+                    <button type="submit" class="main-btn" data-key="updateAccountBtn">Update Account</button>
+                    <button type="button" class="main-btn btn-danger" style="margin-top: 8px;"
+                        onclick="document.getElementById('adminEditStudentCard').classList.add('hidden')"
+                        data-key="cancelBtn">Cancel</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="announceSection" class="hidden">
+            <div class="card">
+                <h3 data-key="postAnnounceTitle">Post Announcement</h3>
+
+                <input type="text" id="annTitle" class="input-box" data-key="annTitlePlaceholder"
+                    placeholder="Announcement Title">
+
+                <textarea id="annContent" class="input-box" data-key="annContentPlaceholder"
+                    placeholder="Announcement Content"></textarea>
+
+                <div class="input-group">
+                    <label for="annCourse" data-key="targetCourseLabel">Target Course</label>
+                    <select id="annCourse" class="input-box"
+                        onchange="handleCourseSelectChange(this.value, 'annMajorGroup', 'annMajor')">
+                        <option value="All">All Courses</option>
+                        <option value="BS Computer Science">BS Computer Science</option>
+                        <option value="BS Criminology">BS Criminology</option>
+                        <option value="BS Accountancy">BS Accountancy</option>
+                        <option value="BS Education">BS Education</option>
+                        <option value="BS Business Administration">BS Business Administration</option>
+                    </select>
+                </div>
+
+                <div class="input-group hidden" id="annMajorGroup">
+                    <label for="annMajor" data-key="majorLabel">Select Major</label>
+                    <select id="annMajor" class="input-box"></select>
+                </div>
+
+                <button type="button" class="main-btn" onclick="postAnnouncement()" data-key="postAnnounceBtn">Post
+                    Announcement</button>
+            </div>
+
+            <div id="announcementsList"></div>
+        </section>
+
+        <section id="adminActivitiesSection" class="hidden">
+            <div class="card">
+                <h3 data-key="createActivityTitle">Create Course Activity</h3>
+
+                <input type="text" id="actTitle" class="input-box" data-key="actTitlePlaceholder"
+                    placeholder="Activity Title">
+
+                <input type="text" id="actLink" class="input-box" data-key="actLinkPlaceholder"
+                    placeholder="Resource Link / PDF">
+
+                <div class="input-group" style="margin-top: 10px;">
+                    <label for="actFile"><i class="fas fa-paperclip"></i> Upload File / Media</label>
+                    <input type="file" id="actFile" class="input-box">
+                </div>
+
+                <div class="input-group" style="margin-top: 10px;">
+                    <label for="actDesc" data-key="actDescPlaceholder">Activity Description</label>
+                    <textarea id="actDesc" class="input-box" placeholder="Activity Description" rows="3"
+                        style="resize: vertical;"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="actCourse" data-key="courseLabel">Course</label>
+                    <select id="actCourse" class="input-box"
+                        onchange="handleCourseSelectChange(this.value, 'actMajorGroup', 'actMajor')">
+                        <option value="BS Computer Science">BS Computer Science</option>
+                        <option value="BS Criminology">BS Criminology</option>
+                        <option value="BS Accountancy">BS Accountancy</option>
+                        <option value="BS Education">BS Education</option>
+                        <option value="BS Business Administration">BS Business Administration</option>
+                    </select>
+                </div>
+
+                <div class="input-group hidden" id="actMajorGroup">
+                    <label for="actMajor" data-key="majorLabel">Select Major</label>
+                    <select id="actMajor" class="input-box"></select>
+                </div>
+
+                <button type="button" class="main-btn" onclick="addActivity()" data-key="addActivityBtn">Add
+                    Activity</button>
+            </div>
+
+            <div id="adminActivitiesList"></div>
+        </section>
+
+        <section id="subjectsSection" class="hidden">
+            <div class="card">
+                <h3><i class="fas fa-book"></i> Manage Subjects</h3>
+
+                <div class="input-group">
+                    <label for="subjectName">Subject Name</label>
+                    <input type="text" id="subjectName" class="input-box" placeholder="Enter subject name">
+                </div>
+
+                <div class="input-group">
+                    <label for="subjectCode">Subject Code</label>
+                    <input type="text" id="subjectCode" class="input-box" placeholder="e.g. CS101">
+                </div>
+
+                <div class="input-group">
+                    <label for="subjectCourse">Course</label>
+                    <select id="subjectCourse" class="input-box">
+                        <option value="">Select Course</option>
+                        <option value="BS Computer Science">BS Computer Science</option>
+                        <option value="BS Criminology">BS Criminology</option>
+                        <option value="BS Accountancy">BS Accountancy</option>
+                        <option value="BS Education">BS Education</option>
+                        <option value="BS Business Administration">BS Business Administration</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="subjectUnits">Units</label>
+                    <input type="number" id="subjectUnits" class="input-box" min="1" max="10" placeholder="Enter units">
+                </div>
+
+                <button type="button" class="main-btn" onclick="addSubject()">
+                    <i class="fas fa-plus"></i> Add Subject
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Subject List</h3>
+                <div id="adminSubjectsList"></div>
+            </div>
+        </section>
+
+        <section id="adminSchedSection" class="hidden">
+            <div class="card">
+                <h3 data-key="manageSchedTitle">Manage Schedules</h3>
+
+                <div class="input-group">
+                    <label for="schSubject">Subject</label>
+                    <input type="text" id="schSubject" class="input-box" placeholder="Subject">
+                </div>
+
+                <div class="input-group">
+                    <label for="schDay">Day &amp; Time</label>
+                    <input type="text" id="schDay" class="input-box" placeholder="e.g. Monday, 8:00 AM - 10:00 AM">
+                </div>
+
+                <div class="input-group">
+                    <label for="schCourse" data-key="courseLabel">Course</label>
+                    <select id="schCourse" class="input-box"
+                        onchange="handleCourseSelectChange(this.value, 'schMajorGroup', 'schMajor')">
+                        <option value="BS Computer Science">BS Computer Science</option>
+                        <option value="BS Criminology">BS Criminology</option>
+                        <option value="BS Accountancy">BS Accountancy</option>
+                        <option value="BS Education">BS Education</option>
+                        <option value="BS Business Administration">BS Business Administration</option>
+                    </select>
+                </div>
+
+                <div class="input-group hidden" id="schMajorGroup">
+                    <label for="schMajor" data-key="majorLabel">Select Major</label>
+                    <select id="schMajor" class="input-box"></select>
+                </div>
+
+                <button type="button" class="main-btn" onclick="addSchedule()" data-key="saveSchedBtn">Save
+                    Schedule</button>
+            </div>
+
+            <div class="card">
+                <h3>Schedule List</h3>
+                <div id="adminSchedList"></div>
+            </div>
+        </section>
+
+        <section id="adminGradesSection" class="hidden">
+            <div class="card">
+                <h3 data-key="manageGradesTitle">Manage Grades</h3>
+
+                <div class="input-group">
+                    <label for="grStudentUser">Student Username</label>
+                    <input type="text" id="grStudentUser" class="input-box" placeholder="Student Username">
+                </div>
+
+                <div class="input-group">
+                    <label for="grSubject">Subject</label>
+                    <input type="text" id="grSubject" class="input-box" placeholder="Subject">
+                </div>
+
+                <div class="input-group">
+                    <label for="grValue">Grade</label>
+                    <input type="number" id="grValue" class="input-box" placeholder="Grade" min="0" max="100"
+                        step="0.01">
+                </div>
+
+                <button type="button" class="main-btn" onclick="saveGrade()" data-key="recordGradeBtn">Record
+                    Grade</button>
+            </div>
+
+            <div class="card">
+                <h3>Recorded Grades</h3>
+                <div id="adminGradesList"></div>
+            </div>
+        </section>
+
+        <section id="adminSettingsSection" class="hidden">
+            <div class="card">
+                <h3 data-key="adminCredsTitle">Admin Credentials &amp; Settings</h3>
+
+                <div class="input-group" style="margin-bottom: 20px;">
+                    <label for="langSelect" data-key="languageLabel">Language / Wika</label>
+                    <select id="langSelect" class="input-box" onchange="setLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="tl">Filipino</option>
+                    </select>
+                </div>
+
+                <form id="adminCredentialsForm" onsubmit="changeAdminPassword(event)">
+                    <div class="input-group">
+                        <label for="admUsername" data-key="adminUsernameLabel">Admin Username</label>
+                        <input type="text" id="admUsername" class="input-box" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="admCurrPass" data-key="currPassLabel">Current Password</label>
+                        <input type="password" id="admCurrPass" class="input-box" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="admNewPass" data-key="newPassLabel">New Password</label>
+                        <input type="password" id="admNewPass" class="input-box" minlength="8" required>
+                    </div>
+
+                    <button type="submit" class="main-btn" data-key="updateAdminBtn">Update Admin Credentials</button>
+                </form>
+
+                <p id="adminSettingsMessage" role="status" aria-live="polite"></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="admin_portal.js" defer></script>
+</body>
+
+</html>

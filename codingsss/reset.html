@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="center-container">
+
+    <div id="loadingOverlay" class="loader-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loaderMsg">Processing...</p>
+    </div>
+
+    <div class="form-container" id="resetCard">
+
+        <h2>RESET PASSWORD</h2>
+
+        <p style="color: var(--fade-text); margin-bottom: 18px; font-size: 13px;">
+            Enter your username to search for your account and send an OTP code.
+        </p>
+
+        <form id="otpStep1">
+
+            <div class="input-group">
+
+                <input type="text" id="resetUsername" placeholder="Enter Username" required>
+
+                <div id="notFoundError" class="error-msg-text hidden">
+                    Username not found. Try again.
+                </div>
+
+            </div>
+
+            <button type="submit" class="main-btn" style="margin-top: 10px;">
+                Send OTP
+            </button>
+
+        </form>
+
+
+        <form id="otpStep2" class="hidden" style="margin-top: 15px;">
+
+            <div class="input-group">
+
+                <input type="text" id="resetOtp" placeholder="Enter 6-digit OTP" maxlength="6" inputmode="numeric"
+                    required>
+
+            </div>
+
+            <div class="input-group">
+
+                <input type="password" id="newPassword" placeholder="Enter New Password" minlength="6" required>
+
+            </div>
+
+            <div class="input-group">
+
+                <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" minlength="6"
+                    required>
+
+            </div>
+
+            <button type="submit" class="main-btn">
+                Change Password
+            </button>
+
+        </form>
+
+
+        <div class="form-footer" style="justify-content: center; margin-top: 20px;">
+            <a href="login.html">
+                Back to Login
+            </a>
+        </div>
+
+    </div>
+
+
+    <script src="reset.js"></script>
+
+</body>
+
+</html>

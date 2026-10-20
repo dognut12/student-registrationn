@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="center-container">
+
+    <div id="loadingOverlay" class="loader-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loaderMsg">Creating your account...</p>
+    </div>
+
+    <div class="form-container" style="max-width: 480px; margin: 30px 0;">
+
+        <h2>Sign Up</h2>
+
+        <form id="signupForm">
+
+            <div class="input-group">
+                <input type="text" id="regFullName" placeholder="Full Name" required>
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="regEmail" placeholder="Email Address" required>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="regUsername" placeholder="Choose Username" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="regPassword" placeholder="Choose Password" required>
+            </div>
+
+            <div class="input-group">
+                <input type="number" id="regAge" placeholder="Age" min="1" required>
+            </div>
+
+            <div class="input-group">
+                <label>
+                    <i class="fas fa-calendar-alt"></i>
+                    Date of Birth
+                </label>
+
+                <input type="date" id="regDob" required>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="regPob" placeholder="Place of Birth" required>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="regFather" placeholder="Father's Name" required>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="regMother" placeholder="Mother's Name" required>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="regAddress" placeholder="Address" required>
+            </div>
+
+            <div class="input-group">
+
+                <label>
+                    <i class="fas fa-graduation-cap"></i>
+                    Select Course
+                </label>
+
+                <select id="regSchool" required>
+                    <option value="" disabled selected>Select Course</option>
+                    <option value="BS Computer Science">BS Computer Science</option>
+                    <option value="BS Criminology">BS Criminology</option>
+                    <option value="BS Accountancy">BS Accountancy</option>
+                    <option value="BS Education">BS Education</option>
+                    <option value="BS in Business Administration">
+                        BS in Business Administration
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="input-group hidden" id="majorGroup">
+
+                <label>Select Major</label>
+
+                <select id="regMajor">
+                    <option value="" disabled selected>Select Major</option>
+                </select>
+
+            </div>
+
+            <div class="input-group">
+                <input type="tel" id="regPhone" placeholder="Phone Number" required>
+            </div>
+
+            <button type="submit" class="main-btn">
+                REGISTER
+            </button>
+
+        </form>
+
+        <div class="form-footer" style="justify-content: center;">
+
+            <span>
+                Already have an account?
+                <a href="login.html" class="signup-link">
+                    Log In
+                </a>
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <script src="signup.js"></script>
+
+</body>
+
+</html>
